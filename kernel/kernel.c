@@ -1,5 +1,7 @@
 #include <stdint.h>
 
+#include "memory.h"
+
 // multiboot header
 __attribute__((section(".multiboot"), used))
 const unsigned int multiboot_header[] = {
@@ -9,7 +11,23 @@ const unsigned int multiboot_header[] = {
 };
 
 
+
+
+
+
 void kernel_main() {
+    extern void memory_init(uint32_t heap_start, uint32_t heap_size);
+
+    #define HEAP_START 0x100000  // 1 MB
+    #define HEAP_SIZE  0x100000  // 1 MB heap
+
+    memory_init(HEAP_START, HEAP_SIZE);
+
+    // allocate memory
+    char* buffer = (char*) kmalloc(128);
+    buffer[0] = 'H';
+    buffer[1] = 'i';
+
     volatile char* vga = (volatile char*)0xB8000;
     const char* msg = "Hello, World!";
 
