@@ -1,3 +1,10 @@
+__attribute__((section(".multiboot")))
+const unsigned int multiboot_header[] = {
+    0x1BADB002,
+    0x0,
+    -(0x1BADB002)
+};
+
 void kernel_main()
 {
     char* vga = (char*)0xb8000;
