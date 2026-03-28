@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.2)
-project(Trebl)
+project(BAS)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Trebl
+add_executable(bas
         kernel/kernel.c)
