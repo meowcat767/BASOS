@@ -13,6 +13,8 @@ set(CMAKE_ASM_FLAGS "-m32 -g")
 add_executable(kernel.elf
         kernel/kernel.c
         boot/boot.s
+        kernel/memory.c
+        kernel/memory.h
 )
 
 
