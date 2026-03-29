@@ -23,6 +23,8 @@ add_executable(kernel.elf
         kernel/keyboard.h
         kernel/vga.h
         kernel/vga.c
+        kernel/string.c
+        kernel/string.h
 )
 
 

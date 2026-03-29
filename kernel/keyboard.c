@@ -20,6 +20,7 @@ static const char scancode_table[] = {
 
 char keyboard_getchar()
 {
+    while (!(inb(0x64) & 1));
     uint8_t scancode = inb(KEYBOARD_DATA_PORT);
 
     if (scancode > 57)

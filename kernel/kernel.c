@@ -1,15 +1,12 @@
 #include "memory.h"
 #include "shell.h"
 #include "gdt.h"
-__attribute__((section(".multiboot"), used))
-const unsigned int multiboot_header[] = {
-    0x1BADB002,
-    0x0,
-    -(0x1BADB002)
-};
+#include "vga.h"
 
 void kernel_main()
 {
+    vga_clear();
+    print("NiiroOS Kernel Started\n");
     gdt_install();
 
     memory_init(0x100000, 0x100000);
