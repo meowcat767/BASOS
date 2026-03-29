@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(BAS C ASM)
+project(NiiroOS C ASM)
 
 set(CMAKE_C_STANDARD 11)
 enable_language(ASM)
@@ -15,6 +15,8 @@ add_executable(kernel.elf
         boot/boot.s
         kernel/memory.c
         kernel/memory.h
+        kernel/shell.c
+        kernel/shell.h
 )
 
 

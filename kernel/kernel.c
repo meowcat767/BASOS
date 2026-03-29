@@ -1,6 +1,7 @@
 #include <stdint.h>
 
 #include "memory.h"
+#include "shell.h"
 
 // multiboot header
 __attribute__((section(".multiboot"), used))
@@ -28,15 +29,7 @@ void kernel_main() {
     buffer[0] = 'H';
     buffer[1] = 'i';
 
-    volatile char* vga = (volatile char*)0xB8000;
-    const char* msg = "Hello, World!";
-
-    for (int i = 0; msg[i] != 0; i++) {
-        vga[i * 2] = msg[i];
-        vga[i * 2 + 1] = 0x07;
-    }
-
-    while (1) {}
+    shell_run();
 }
 
 struct GDTEntry {
