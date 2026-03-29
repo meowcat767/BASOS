@@ -1,47 +1,21 @@
 #include "shell.h"
-#include <stdint.h>
-
-#define VGA_MEMORY ((volatile uint16_t*)0xB8000)
-
-static int cursor = 0;
-
-static void print(const char* str)
-{
-    while (*str)
-    {
-        VGA_MEMORY[cursor++] = (*str | 0x0700);
-        str++;
-    }
-}
-
-static int strcmp(const char* a, const char* b)
-{
-    while (*a && *b)
-    {
-        if (*a != *b)
-            return 1;
-        a++;
-        b++;
-    }
-
-    return *a != *b;
-}
+#include "keyboard.h"
+#include "vga.h"
+#include "string.h"
 
 void shell_execute(char* cmd)
 {
-    if (!strcmp(cmd, "help"))
+    if (strcmp(cmd, "help") == 0)
     {
         print("\ncommands: help hello clear\n");
     }
-    else if (!strcmp(cmd, "hello"))
+    else if (strcmp(cmd, "hello") == 0)
     {
         print("\nHello from NiiroOS!\n");
     }
-    else if (!strcmp(cmd, "clear"))
+    else if (strcmp(cmd, "clear") == 0)
     {
-        for (int i = 0; i < 80*25; i++)
-            VGA_MEMORY[i] = (' ' | 0x0700);
-        cursor = 0;
+        vga_clear();
     }
     else
     {
@@ -58,7 +32,7 @@ void shell_run()
 
     while (1)
     {
-        char c = keyboard_getchar();   // TODO: keyboard driver
+        char c = keyboard_getchar();
 
         if (c == '\n')
         {

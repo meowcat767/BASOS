@@ -17,6 +17,12 @@ add_executable(kernel.elf
         kernel/memory.h
         kernel/shell.c
         kernel/shell.h
+        kernel/gdt.c
+        kernel/gdt.h
+        kernel/keyboard.c
+        kernel/keyboard.h
+        kernel/vga.h
+        kernel/vga.c
 )
 
 
