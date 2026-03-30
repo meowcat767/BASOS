@@ -13,8 +13,10 @@ void vga_putchar(char c) {
     if (c == '\n') {
         cursor_pos += 80 - (cursor_pos % 80);
     } else if (c == '\b') {
-        if (cursor_pos > 0) cursor_pos--;
-        vga_buffer[cursor_pos] = (0x07 << 8) | ' ';
+        if (cursor_pos > 0) {
+            cursor_pos--;
+            vga_buffer[cursor_pos] = (0x07 << 8) | ' ';
+        }
     } else {
         vga_buffer[cursor_pos] = (0x07 << 8) | c;
         cursor_pos++;

@@ -11,5 +11,6 @@ void kernel_main()
 
     memory_init(0x100000, 0x100000);
 
+    shell_init();
     shell_run();
 }

@@ -3,6 +3,9 @@
 #include "vga.h"
 #include "string.h"
 
+static char buffer[128];
+static int pos = 0;
+
 void shell_execute(char* cmd)
 {
     if (strcmp(cmd, "help") == 0)
@@ -23,33 +26,45 @@ void shell_execute(char* cmd)
     }
 }
 
+void shell_init()
+{
+    pos = 0;
+    buffer[0] = 0;
+}
+
 void shell_run()
 {
-    char buffer[128];
-    int pos = 0;
-
+    pos = 0;
     print("\n> ");
 
     while (1)
     {
         char c = keyboard_getchar();
+        if (c == 0) continue;
 
         if (c == '\n')
         {
             buffer[pos] = 0;
-            shell_execute(buffer);
+            if (pos > 0)
+                shell_execute(buffer);
             pos = 0;
             print("\n> ");
         }
+        else if (c == '\b')
+        {
+            if (pos > 0)
+            {
+                pos--;
+                vga_putchar('\b');
+            }
+        }
         else
         {
-            buffer[pos++] = c;
-
-            char s[2];
-            s[0] = c;
-            s[1] = 0;
-
-            print(s);
+            if (pos < 127)
+            {
+                buffer[pos++] = c;
+                vga_putchar(c);
+            }
         }
     }
 }
